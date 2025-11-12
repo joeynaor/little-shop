@@ -35,7 +35,11 @@ spec:
             - name: KAFKA_LOG_DIRS
               value: "/kafka-logs"
             - name: KAFKA_CLUSTER_ID
-              value: "5L6g3nShT-eMCtK--X86sw" 
+              value: "5L6g3nShT-eMCtK--X86sw"
+            - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
+              value: "1"
+            - name: KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR
+              value: "1" 
           volumeMounts:
             - name: kafka-data
               mountPath: /kafka-logs
