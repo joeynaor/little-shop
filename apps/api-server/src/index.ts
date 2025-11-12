@@ -1,9 +1,11 @@
 import express from 'express';
+import cors from 'cors';
 import { connectToMongo } from './mongo';
 import { startKafkaConsumer } from './kafka';
 import { DataModel } from './model';
 
 const app = express();
+app.use(cors());
 const port = process.env.PORT || 3000;
 
 app.get('/bought-items', async (_req, res) => {
