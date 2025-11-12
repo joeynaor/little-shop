@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build:docker": "docker build --build-arg WORKSPACE_NAME=$npm_package_name -t customer-backend .",
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "ts-node src/index.ts",
@@ -18,7 +19,8 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
-    "kafkajs": "^2.2.4"
+    "kafkajs": "^2.2.4",
+    "typescript": "5.9.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",

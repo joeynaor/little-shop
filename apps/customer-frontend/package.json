@@ -18,6 +18,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "build:docker": "docker build --build-arg WORKSPACE_NAME=$npm_package_name -t customer-frontend .",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
