@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/little-shop';
 const MONGO_USERNAME = process.env.MONGO_USERNAME || 'mongouser';
-const MONGO_PASSWORD = process.env.MONGO_PASSWORD || 'secret';
+const MONGO_PASSWORD = process.env.MONGO_PASSWORD || 'secret';  // TODO: use AWS SecretsManager secret name & region instead
 
 export const connectToMongo = async () => {
   try {

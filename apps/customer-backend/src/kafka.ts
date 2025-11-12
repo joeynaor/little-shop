@@ -1,3 +1,4 @@
+// TODO: DRY: This piece of code is duplicated from api-server. Migrate to an NPM library.
 import { Kafka } from 'kafkajs';
 import dotenv from 'dotenv';
 

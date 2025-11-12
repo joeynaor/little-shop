@@ -1,3 +1,4 @@
+// TODO: DRY: This piece of code is duplicated in customer-backend. Migrate to an NPM library.
 import { Kafka } from 'kafkajs';
 import { DataModel } from './model';
 
@@ -11,6 +12,7 @@ const kafka = new Kafka({
 
 const consumer = kafka.consumer({ groupId: 'api-server-group' });
 
+// Start Kafka consumer which awaits to consume messages published by customer-backend
 export const startKafkaConsumer = async () => {
   await consumer.connect();
   await consumer.subscribe({ topic: KAFKA_TOPIC, fromBeginning: true });

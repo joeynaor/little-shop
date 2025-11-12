@@ -8,6 +8,7 @@ const app = express();
 app.use(cors());
 const port = process.env.PORT || 3000;
 
+// Fetch bought items from Mongo
 app.get('/bought-items', async (_req, res) => {
   try {
     const data = await DataModel.find();

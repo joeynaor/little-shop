@@ -11,6 +11,7 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+// Publish a message following a user purchase. To be consumed by api-server and saved in DB.
 app.post('/buy', async (req, res) => {
   const { username, userId, price, timestamp, itemName } = req.body;
 
