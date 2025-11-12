@@ -37,3 +37,24 @@ spec:
       targetPort: 3000
   selector:
     app: api-server
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: api-server-scaledobject
+  namespace: default
+spec:
+  minReplicaCount: 1
+  maxReplicaCount: 5
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: api-server
+
+  triggers:
+  - type: kafka
+    metadata:
+      bootstrapServers: kafka.default.svc.cluster.local:9092
+      topic: bought-items
+      consumerGroup: api-server-group
+      lagThreshold: "5"
