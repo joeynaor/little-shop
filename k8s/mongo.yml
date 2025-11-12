@@ -1,8 +1,21 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
 metadata:
   name: mongo
 spec:
+  clusterIP: None
+  ports:
+    - port: 27017
+      targetPort: 27017
+  selector:
+    app: mongo
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongo
+spec:
+  serviceName: "mongo"
   replicas: 1
   selector:
     matchLabels:
@@ -24,16 +37,14 @@ spec:
           value: "secret"
         - name: MONGO_INITDB_DATABASE
           value: "little-shop"
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: mongo
-spec:
-  type: NodePort
-  ports:
-    - port: 27017
-      targetPort: 27017
-      nodePort: 32017
-  selector:
-    app: mongo
+        volumeMounts:
+        - name: mongo-data
+          mountPath: /data/db
+  volumeClaimTemplates:
+  - metadata:
+      name: mongo-data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 5Gi

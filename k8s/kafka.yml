@@ -1,10 +1,11 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: kafka
   labels:
     app: kafka
 spec:
+  serviceName: kafka
   replicas: 1
   selector:
     matchLabels:
@@ -16,7 +17,7 @@ spec:
     spec:
       containers:
         - name: kafka
-          image: apache/kafka:latest 
+          image: apache/kafka:latest
           ports:
             - containerPort: 9092
           env:
@@ -39,23 +40,28 @@ spec:
             - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
               value: "1"
             - name: KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR
-              value: "1" 
+              value: "1"
           volumeMounts:
             - name: kafka-data
               mountPath: /kafka-logs
-      volumes:
-        - name: kafka-data
-          emptyDir: {}
+  volumeClaimTemplates:
+    - metadata:
+        name: kafka-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 5Gi
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: kafka
 spec:
+  clusterIP: None
   selector:
     app: kafka
   ports:
     - name: plaintext
       port: 9092
       targetPort: 9092
-  type: ClusterIP
