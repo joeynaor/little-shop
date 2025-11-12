@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import './App.css';
 
 interface Item {
@@ -46,13 +47,13 @@ interface BoughtItem {
       });
 
       if (response.ok) {
-        alert(`Successfully bought ${item.name}!`);
+        toast.success(`Successfully bought ${item.name}!`);
       } else {
-        alert(`Failed to buy ${item.name}.`);
+        toast.error(`Failed to buy ${item.name}.`);
       }
     } catch (error) {
       console.error('Error buying item:', error);
-      alert('An error occurred while trying to buy the item.');
+      toast.error('An error occurred while trying to buy the item.');
     }
   };
 
@@ -75,11 +76,11 @@ interface BoughtItem {
         setShowBoughtItemsTable(true);
       } else {
         console.error('Failed to fetch bought items.');
-        alert('Failed to fetch bought items.');
+        toast.error('Failed to fetch bought items.');
       }
     } catch (error) {
       console.error('Error fetching bought items:', error);
-      alert('An error occurred while trying to fetch bought items.');
+      toast.error('An error occurred while trying to fetch bought items.');
     }
   };
 
@@ -134,6 +135,7 @@ interface BoughtItem {
           </div>
         )}
       </header>
+      <Toaster />
     </div>
   );
 }
