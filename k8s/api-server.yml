@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-server
+  template:
+    metadata:
+      labels:
+        app: api-server
+    spec:
+      containers:
+      - name: api-server
+        image: docker.io/joeynaor/little-shop-api-server
+        ports:
+        - containerPort: 3000
+        env:
+        - name: KAFKA_BROKER
+          value: "kafka:9092"
+        - name: KAFKA_TOPIC
+          value: "bought-items"
+        - name: MONGO_URI
+          value: "mongodb://mongo:27017/little-shop"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-server
+spec:
+  type: NodePort
+  ports:
+    - name: plaintext
+      port: 3000
+      targetPort: 3000
+  selector:
+    app: api-server

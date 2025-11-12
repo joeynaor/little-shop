@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
-    "build:docker": "docker build --build-arg WORKSPACE_NAME=$npm_package_name -t api-server .",
+    "build:docker": "docker build --build-arg WORKSPACE_NAME=$npm_package_name -t joeynaor/little-shop/api-server:latest .",
+    "docker-push": "docker push joeynaor/little-shop/api-server:latest",
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "nodemon",
